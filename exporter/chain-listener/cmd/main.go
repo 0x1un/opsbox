@@ -1,8 +1,8 @@
 package main
 
 import (
-	v2 "chain-listener/v2"
 	"fmt"
+	v2 "github.com/0x1un/opsbox/exporter/chain-listener/v2"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/collectors"

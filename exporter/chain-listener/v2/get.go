@@ -1,8 +1,8 @@
 package v2
 
 import (
-	"chain-listener/spider"
 	"context"
+	"github.com/0x1un/opsbox/exporter/chain-listener/spider"
 	"github.com/go-resty/resty/v2"
 	cmap "github.com/orcaman/concurrent-map/v2"
 	"github.com/tidwall/gjson"
