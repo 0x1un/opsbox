@@ -8,8 +8,12 @@
 
   A lot of customization features have been added, which will be described later.
 
+  1. forwarding messages to a different channel
+  2. add graph panel to message if configured labels in Prometheus rule
+
 ## Cli:
 - Gomi
+  Linux `rm` command replacement
 
   Fixed the problem of not being able to move files across devices.
 
@@ -27,9 +31,11 @@
 
   Use PromQL expressions to plot the trend in Grafana of sync-heights
 
+
 - elastic-alert
 
   ELK log alerting solutions Prometheus-Based, to collect log tags from elasticsearch and store to Prometheus metrics
+
 
 - find_python_process
 
