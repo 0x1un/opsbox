@@ -1,0 +1,124 @@
+modules:
+  namenode: # hdfs support
+    scrape_metrics:
+      - Hadoop:service=NameNode,name=FSNamesystemState CapacityRemaining HDFS剩余容量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem CorruptBlocks HDFS错误块数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem MissingBlocks HDFS消失块数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem NumLiveDataNodes HDFS-DataNode在线数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem NumDeadDataNodes HDFS-DataNode离线数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem FilesTotal HDFS-总文件数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem TotalLoad HDFS-访问统计 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem BlockCapacity HDFS-可分配块的最大数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystemState BlocksTotal HDFS-块总数 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystemState UnderReplicatedBlocks HDFS-副本数不足的块总数 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystemState NumStaleDataNodes HDFS-失效块数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=NameNodeInfo NumberOfMissingBlocks HDFS丢失块数量 hadoop_hdfs
+      - Hadoop:service=NameNode,name=RpcActivityForPort8020 RpcProcessingTimeAvgTime rpc平均处理时间 hadoop_hdfs
+      - Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020 GetBlocksAvgTime block获取平均耗时 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem EstimatedCapacityLostTotal 容量故障导致的总容量损失估计 hadoop_hdfs
+      - Hadoop:service=NameNode,name=FSNamesystem VolumeFailuresTotal 所有DataNodes的卷故障总数 hadoop_hdfs
+      - Hadoop:service=NameNode,name=JvmMetrics MemNonHeapUsedM JVM当前已使用的NonHeapMemory大小 hadoop_hdfs
+      - Hadoop:service=NameNode,name=JvmMetrics MemHeapUsedM JVM当前已使用的HeapMemory大小 hadoop_hdfs
+      - Hadoop:service=NameNode,name=JvmMetrics MemMaxM JVM运行时可以使用的最大内存大小 hadoop_hdfs
+  datanode:
+    scrape_metrics:
+      - Hadoop:service=DataNode,name=DataNodeActivity RemoteBytesRead 远程客户端读取字节速率 hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity RemoteBytesWritten 远程客户端写入字节速率 hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity WritesFromRemoteClient 来自远程客户端写操作QPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity WritesFromLocalClient 来自本地客户端写操作OPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity ReadsFromRemoteClient 来自远程客户端读操作QPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity ReadsFromLocalClient 来自本地客户端读操作QPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity DatanodeNetworkErrors 网络错误统计 hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity HeartbeatsAvgTime 心跳平均时长 hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity HeartbeatsNumOps 心跳QPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity SendDataPacketTransferNanosAvgTime 发送数据包平均时间 hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity ReadBlockOpNumOps 从DataNode读取Block的OPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity WriteBlockOpNumOps 向DataNode写入Block的OPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity BlockChecksumOpNumOps DataNode进行Checksum操作的OPS hadoop_datanode
+      - Hadoop:service=DataNode,name=DataNodeActivity CopyBlockOpNumOps 复制Block操作的OPS hadoop_datanode
+
+
+  yarn:
+#    targets:
+#      - "192.168.224.91:8088/jmx"
+    scrape_metrics:
+      - Hadoop:service=ResourceManager,name=ClusterMetrics NumUnhealthyNMs Yarn不健康的节点数 hadoop_yarn
+      - Hadoop:service=ResourceManager,name=ClusterMetrics NumActiveNMs Yarn当前在线的节点数 hadoop_yarn
+      - Hadoop:service=ResourceManager,name=ClusterMetrics NumLostNMs Yarn失踪的节点数 hadoop_yarn
+      - Hadoop:service=ResourceManager,name=RpcActivityForPort8030 tag.NumOpenConnectionsPerUser Yarn打开的任务 hadoop_yarn
+
+  hbase:
+    scrape_metrics:
+      - Hadoop:service=HBase,name=Master,sub=IPC numCallsInPriorityQueue 优先队列RPC请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC numCallsInReplicationQueue 优先复制队列RPC请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC numCallsInWriteQueue 写调用队列调用RPC请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC numCallsInReadQueue 读取调用队列中RPC请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC numCallsInScanQueue 扫描调用队列中RPC请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC receivedBytes 集群接收数据量 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC sentBytes 集群发送数据量 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=IPC numOpenConnections 打开的连接数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server clusterRequests 集群总请求数 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server numDeadRegionServers 离线的RS数量 hadoop_hbase
+      - java.lang:type=OperatingSystem OpenFileDescriptorCount HBase打开的文件数 hadoop_hbase
+      - java.lang:type=OperatingSystem FreePhysicalMemorySize 空闲虚物理内存大小 hadoop_hbase
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsWaiting 等待的线程数 hadoop_hbase
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsBlocked Block的线程数 hadoop_hbase
+      - Hadoop:service=HBase,name=RegionServer,sub=WAL SyncTime_mean WAL写hdfs的平均时间 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server masterActiveTime master进入active的时间 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server masterStartTime master进程启动时间 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server masterFinishedInitializationTime master完成初始化的时间 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=Server averageLoad master平均负载 hadoop_hbase
+      - Hadoop:service=HBase,name=Master,sub=AssignmentManager ritOldestAge 最长rit hadoop_hbase
+
+
+  hbase_rs:
+    scrape_metrics:
+      - Hadoop:service=HBase,name=JvmMetrics MemNonHeapUsedM 进程使用的非堆内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics MemNonHeapCommittedM 进程commit的非堆内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics MemHeapUsedM 进程使用的堆内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics MemHeapCommittedM 进程commit的堆内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics MemHeapMaxM 进程最大的堆内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics MemMaxM 进程最大内存大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsNew 处于NEW状态的线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsRunnable 处于RUNNABLE状态的线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsBlocked 处于BLOCKED状态的线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsWaiting 处于WAITING状态的线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsTimedWaiting 处于TIMED.WAITING状态的线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=JvmMetrics ThreadsTerminated 当前TERMINATED状态线程数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server regionCount region个数 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server storeCount 存储个数 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server storeFileCount 存储文件个数 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server storeFileSize 存储文件总大小 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server totalRequestCount 总请求数 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server splitQueueLength split队列长度 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server compactionQueueLength compaction队列长度 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server flushQueueLength region-flush队列长度 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server slowAppendCount append请求时间超过1s的数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server slowDeleteCount delete请求时间超过1s的数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server slowGetCount get请求时间超过1s的数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server slowPutCount put请求时间超过1s的数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server slowIncrementCount increment请求时间超过1s的数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server readRequestCount 读请求数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server writeRequestCount 写请求数量 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server readRequestRatePerSecond 读请求每秒速率 hadoop_hbase_rs
+      - Hadoop:service=HBase,name=RegionServer,sub=Server writeRequestRatePerSecond 写请求每秒速率 hadoop_hbase_rs
+
+  hbase_rs_tbs:
+    scrape_metrics:
+      - Hadoop:service=HBase,name=RegionServer,sub=Tables readRequestCount 读请求数量 hadoop_hbase_rs_tbs
+      - Hadoop:service=HBase,name=RegionServer,sub=Tables writeRequestCount 写请求数量 hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables filteredReadRequestCount filteredReadRequestCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables totalRequestCount totalRequestCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables memStoreSize memStoreSize hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables storeFileCount storeFileCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables storeFileSize storeFileSize hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables tableSize tableSize hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables averageRegionSize averageRegionSize hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables regionCount regionCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables storeCount storeCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables maxStoreFileAge maxStoreFileAge hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables minStoreFileAge minStoreFileAge hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables avgStoreFileAge avgStoreFileAge hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables numReferenceFiles numReferenceFiles hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables memstoreOnlyRowReadsCount memstoreOnlyRowReadsCount hadoop_hbase_rs_tbs
+#      - Hadoop:service=HBase,name=RegionServer,sub=Tables mixedRowReadsCount mixedRowReadsCount hadoop_hbase_rs_tbs

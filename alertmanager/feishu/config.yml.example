@@ -1,0 +1,38 @@
+app_id: cli_246c364100c
+app_secret: eFjOHLPCdUydQTJvg3uMJ
+
+grafana:
+  url: http://192.168.224.121:3000
+
+oss:
+  aliyun:
+    endpoint: xxxxx.aliyuncs.com
+    access_key: LTAI5tJs1PtMdVoahF
+    access_secret: flQB1SqI1yFQb
+    bucket: grafana
+
+receivers:
+  da:
+    access_token: IQf3seFqi6h4aFDpLib
+    fsurl: "https://open.feishu.cn/open-apis/bot/v2/hook/"
+    mentions:
+      mobiles: ["13800138000"]
+
+  bigdata:
+    access_token: IQcGf3seF6h4aFDpLib
+    fsurl: "https://open.feishu.cn/open-apis/bot/v2/hook/"
+    mentions:
+      mobiles: ["13800138000"]
+
+  tjyl:
+    access_token: IQcGf3se3Fq4aFDpLib
+    fsurl: "https://open.feishu.cn/open-apis/bot/v2/hook/"
+    mentions:
+      mobiles: ["13800138000"]
+
+
+  default:
+    access_token: IQcG3se3Fqi6h4aFDpLib
+    fsurl: "https://open.feishu.cn/open-apis/bot/v2/hook/"
+    mentions:
+      mobiles: ["13800138000"]

@@ -1,0 +1,86 @@
+duration: 3 # seconds
+blockchain:
+  - name: OMNI
+    pub_node:
+      - url: 'https://api.omniexplorer.info/v1/transaction/blocks'
+        name: omniexplorer
+        method: get
+      - url: 'https://api.blockchair.com/bitcoin/omni/stats'
+        name: blockchair
+        method: get
+    privy_node:
+      - url: 'http://192.168.224.122:8332/rest/chaininfo.json'
+        name: '192.168.224.122:8332'
+        method: get
+    pub_get_field_rule:
+      omniexplorer: latest
+      blockchair: context.state
+    privy_get_field_rule:
+      '192.168.224.122:8332': blocks
+
+
+  - name: ETH
+    pub_node:
+      - url: 'https://api.blockchair.com/ethereum/stats'
+        name: blockchair
+        method: get
+    privy_node:
+      - url: 'http://192.168.224.85:8545/'
+        name: '192.168.224.85:8545'
+        method: jsonrpc
+    pub_get_field_rule:
+      blockchair: data.best_block_height
+    privy_get_field_rule:
+      '192.168.224.85:8545': eth_blockNumber
+
+  - name: BSC
+    pub_node:
+      - url: 'https://bscscan.com'
+        name: bscscan
+        method: "spider.GetLastBlockFromBscscanDotCom"
+      - url: 'https://bscxplorer.com'
+        name: bscxplorer
+        method: "spider.GetLastBlockFromBSCXPLORERDotCom"
+    privy_node:
+      - url: 'http://192.168.224.78:8545/'
+        name: '192.168.224.78:8545'
+        method: jsonrpc
+    pub_get_field_rule:
+      bscscan: null
+      bscxplorer: null
+    privy_get_field_rule:
+      '192.168.224.78:8545': eth_blockNumber
+  - name: TRON
+    pub_node:
+      - url: 'https://apilist.tronscanapi.com/api/system/homepage-bundle'
+        name: tronscanapi
+        method: "get"
+    privy_node:
+      - url: 'http://192.168.224.124:8090/wallet/getnodeinfo'
+        name: '192.168.224.124:8090'
+        method: get
+    pub_get_field_rule:
+      tronscanapi: tps.data.blockHeight
+    privy_get_field_rule:
+      '192.168.224.124:8090': beginSyncNum
+
+  - name: BTC
+    pub_node:
+      - url: 'https://api.blockchair.com/bitcoin/stats'
+        name: blockchair
+        method: "get"
+    privy_node:
+      - url: 'http://btc:btc2021@192.168.224.124:8332'
+        name: '192.168.224.124:8332'
+        method: post
+        body: |
+          {
+              "jsonrpc": "1.0",
+              "id": "1",
+              "method": "getblockchaininfo",
+              "params": []
+          }
+    pub_get_field_rule:
+      blockchair: data.best_block_height
+    privy_get_field_rule:
+      '192.168.224.124:8332': result.blocks

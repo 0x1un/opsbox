@@ -1,0 +1,55 @@
+version: 2.1
+check_or_pull_up:
+  feishu_bot: "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxxxxxxxxxxxxxxxx" # feishu bot webhook
+  check_interval: 600
+  hbase_region_server:
+    external:
+      hbase_daemon_script: "/bigdata/hbase/bin/hbase-daemon.sh"
+      master:
+        http_port: 16010
+        user: root
+        passwd: 123456
+        ssh_port: "22"
+        targets:
+          [
+            "192.168.224.91",
+            "192.168.224.92"
+          ]
+      slave:
+        http_port: 16030
+        user: root
+        passwd: 123456
+        ssh_port: "22"
+        targets:
+          [
+            "192.168.224.93",
+            "192.168.224.94",
+            "192.168.224.96",
+            "192.168.224.97",
+            "192.168.224.116"
+          ]
+    internal:
+      hbase_daemon_script: "/bigdata/hbase/bin/hbase-daemon.sh"
+      master:
+        http_port: 16010
+        user: bigdata
+        passwd: 123456
+        ssh_port: "22"
+        targets:
+          [
+            "192.168.224.95",
+            "192.168.224.75"
+          ]
+      slave:
+        http_port: 16030
+        user: bigdata
+        passwd: 123456
+        ssh_port: "22"
+        targets:
+          [
+            "192.168.224.75",
+            "192.168.224.55",
+            "192.168.224.59",
+            "192.168.224.110",
+            "192.168.224.111"
+          ]

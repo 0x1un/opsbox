@@ -1,0 +1,59 @@
+monitor:
+  promethues:
+    prom_metric: /metrics
+    port: 9072
+
+elasticsearch:
+  address:
+    - "https://127.0.0.1:9200"
+  username: elastic
+  password: whFEHsyeODdYoYo5c
+  cert_finger_print: "7c385f6c2deb1436dfcd35de1453xxxxxxxxxxxxxxxxxxxxx"
+
+alert_rules:
+  - index: test-example-server-*
+    keys: ["class", "level", "create_time"]
+    dsl: |
+          {
+            "size": 10000,
+            "track_total_hits": true,
+            "sort": [
+              {
+                "@timestamp": {
+                  "order": "desc",
+                  "unmapped_type": "boolean"
+                }
+              }
+            ],
+            "fields": [
+              {
+                "field": "*",
+                "include_unmapped": "true"
+              }
+            ],
+            "version": true,
+            "script_fields": {},
+            "stored_fields": [
+              "*"
+            ],
+            "runtime_mappings": {},
+            "_source": false,
+            "query": {
+              "bool": {
+                "must": [],
+                "filter": [
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "format": "strict_date_optional_time",
+                        "gte": "now-1m",
+                        "lte": "now"
+                      }
+                    }
+                  }
+                ],
+                "should": [],
+                "must_not": []
+              }
+            }
+          }
