@@ -32,8 +32,5 @@ func LoadConfig() (*MetricConfig, error) {
 		return nil, err
 	}
 	var mc MetricConfig
-	if err := yaml.Unmarshal(data, &mc); err != nil {
-		return nil, err
-	}
-	return &mc, nil
+	return &mc, yaml.Unmarshal(data, &mc)
 }

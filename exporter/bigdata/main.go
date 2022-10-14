@@ -23,7 +23,7 @@ var (
 func init() {
 	_cfg, err := config.LoadConfig()
 	if err != nil {
-		log.Fatalf("failed to load config file, %s", err)
+		log.Fatalf("failed to load the config file, %s", err)
 	}
 	cfg = *_cfg
 }
