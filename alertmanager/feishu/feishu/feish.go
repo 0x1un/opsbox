@@ -2,8 +2,8 @@ package feishu
 
 import (
 	"bytes"
-	"github.com/magicst0ne/alertmanager-webhook-feishu/model"
-	"github.com/magicst0ne/alertmanager-webhook-feishu/tmpl"
+	"github.com/0x1un/opsbox/alertmanager/feishu/model"
+	"github.com/0x1un/opsbox/alertmanager/feishu/tmpl"
 	"text/template"
 )
 
@@ -14,7 +14,7 @@ type Feishu struct {
 	alertTpl *template.Template
 }
 
-func NewFeishu(fsurl string) (*Feishu, error) {
+func NewFeishu(furl string) (*Feishu, error) {
 
 	// template
 	tpl, err := tmpl.GetEmbedTemplate("default.tmpl")
@@ -25,7 +25,7 @@ func NewFeishu(fsurl string) (*Feishu, error) {
 	}
 
 	return &Feishu{
-		webhook:  fsurl,
+		webhook:  furl,
 		sdk:      NewSDK("", ""),
 		tpl:      tpl,
 		alertTpl: alertTpl,

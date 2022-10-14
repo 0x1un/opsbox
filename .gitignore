@@ -18,3 +18,4 @@
 *.yml
 *.yaml
 .idea
+build/*

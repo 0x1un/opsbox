@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -109,7 +108,7 @@ func run(args []string) int {
 	}
 
 	if err := cli.Run(args); err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "%v\n", err)
 		return 1
 	}
 
@@ -118,11 +117,14 @@ func run(args []string) int {
 
 // Run runs gomi main logic
 func (c CLI) Run(args []string) error {
-	c.Inventory.Open()
+	if err := c.Inventory.Open(); err != nil {
+		_, _ = fmt.Fprintf(c.Stderr, "inventory open failed, %s\n", err)
+		return nil
+	}
 
 	switch {
 	case c.Option.Version:
-		fmt.Fprintf(c.Stdout, "%s (%s)\n", Version, Revision)
+		_, _ = fmt.Fprintf(c.Stdout, "%s (%s)\n", Version, Revision)
 		return nil
 	case c.Option.Restore:
 		return c.Restore()
@@ -328,7 +330,7 @@ func (f File) ToJSON(w io.Writer) {
 	if err != nil {
 		return
 	}
-	fmt.Fprint(w, string(out))
+	_, _ = fmt.Fprint(w, string(out))
 }
 
 func isBinary(path string) bool {
@@ -383,9 +385,14 @@ func head(path string) string {
 	switch {
 	case fi.IsDir():
 		lines = []string{"(directory)"}
-		dirs, _ := ioutil.ReadDir(path)
+		dirs, _ := os.ReadDir(path)
 		for _, dir := range dirs {
-			lines = append(lines, fmt.Sprintf("%s\t%s", dir.Mode().String(), dir.Name()))
+			info, err := dir.Info()
+			if err != nil {
+				log.Printf("[DEBUG] get dir info failed, %s", err)
+				continue
+			}
+			lines = append(lines, fmt.Sprintf("%s\t%s", info.Mode().String(), dir.Name()))
 		}
 	default:
 		if isBinary(path) {
