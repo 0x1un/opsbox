@@ -28,8 +28,10 @@ func init() {
 	cfg = *_cfg
 }
 
-type Bean map[string]any
-type JMXBeans map[string][]Bean
+type (
+	Bean     map[string]any
+	JMXBeans map[string][]Bean
+)
 
 func (b Bean) Get(metricName string) any {
 	if value, ok := b[metricName]; ok {
@@ -78,7 +80,8 @@ func (j JMXBeans) Get(name string) Bean {
 			}
 
 			// DataNodeActivity 后面跟的是变量
-			if strings.HasPrefix(name, "Hadoop:service=DataNode,name=DataNodeActivity") && strings.HasPrefix(_name.(string), name) {
+			if strings.HasPrefix(name, "Hadoop:service=DataNode,name=DataNodeActivity") &&
+				strings.HasPrefix(_name.(string), name) {
 				return bean
 			}
 		}
@@ -127,6 +130,7 @@ func metricHandler(w http.ResponseWriter, r *http.Request) {
 		scrapeSingleMetric(info, metrics.ScrapeMetrics, w, r)
 	}
 }
+
 func scrapeMultiMetric(info JMXBeans, w http.ResponseWriter, r *http.Request) {
 	name := "Hadoop:service=HBase,name=RegionServer,sub=Tables"
 	registry := prometheus.NewRegistry()
